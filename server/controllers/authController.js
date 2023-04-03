@@ -2,6 +2,7 @@ import express from "express"
 import authModel from "../models/authModel.js";
 import bcryptjs from "bcryptjs"
 import jwt from "jsonwebtoken"
+import { getJwtSecret } from "../config/jwt.js"
 
 class AuthController{
     static userRegistration = async (req, res)=>{
@@ -53,7 +54,7 @@ class AuthController{
                     if(email === isEmailRegistered.email && await bcryptjs.compare(password, isEmailRegistered.password)){
 
                         //Generate Token
-                        const token = jwt.sign({userID : isEmailRegistered._id}, "pleaseSubscribe", {
+                        const token = jwt.sign({userID : isEmailRegistered._id}, getJwtSecret(), {
                             expiresIn: "2d",
                         })
 
