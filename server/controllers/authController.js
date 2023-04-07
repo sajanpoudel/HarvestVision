@@ -77,7 +77,8 @@ class AuthController{
     }
 
     static changePassword = async (req, res)=>{
-        
+        // Not built yet: answer the request instead of leaving it hanging
+        return res.status(501).json({message: "Change password is not implemented yet"})
     }
 }
 
