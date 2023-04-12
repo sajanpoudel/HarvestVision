@@ -7,3 +7,24 @@ Farmers still grow their plants, seeds, and crops today without the aid of techn
 <h3>What it does?</h3>
 
 Our initiative, Kissan, uses detailed live data on the temperature, moisture content, and soil nutrition. This project consists of two parts: a farmer component and an expert portion. The farmer first gets onto the website, searches for the soil/land specialist, and then simply schedules an appointment with the chosen expert. And when the expert visits the farmer's field, he or she also carries a gadget that measures the soil's temperature, pressure, and moisture content and its percentage. Using all of these factors, the expert may easily forecast which crops would thrive on a certain soil. The farmer will benefit from this by not suffering a loss and the proper amount of crops can be grown.
+
+## Running the project
+
+Server (Express, MongoDB, JWT login):
+
+```
+cd server
+npm install
+cp .env.example .env     # set JWT_SECRET and, if needed, MONGO_URI
+JWT_SECRET=your-secret node index.js
+```
+
+Endpoints under `/api/v1`: `POST /user/register`, `POST /user/login`, and a protected `POST /change-password` that is not implemented yet.
+
+Client (React):
+
+```
+cd client
+npm install
+npm start
+```
