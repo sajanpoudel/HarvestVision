@@ -78,6 +78,12 @@ class AuthController {
     }
   };
 
+  static profile = async (req, res) => {
+    // checkIsUserAuthenticated has already loaded the user without the password hash
+    const { _id, name, email } = req.user;
+    return res.status(200).json({ user: { id: _id, name, email } });
+  };
+
   static changePassword = async (req, res) => {
     const { currentPassword, newPassword } = req.body;
     try {
