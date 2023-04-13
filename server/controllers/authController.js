@@ -76,7 +76,20 @@ class AuthController{
     }
 
     static changePassword = async (req, res)=>{
-        
+        // Yet to write
+    }
+
+    static profile = async(req, res)=>{
+        try {
+            const fetchProfile = await (authModel.find({_id: req.user._id}));
+            if(fetchProfile){
+                console.log("Profile found")
+                console.log(fetchProfile)
+                return res.status(200).json(fetchProfile)
+            }
+        } catch (error) {
+            return res.status(400).json({message: error.message})
+        }
     }
 }
 
