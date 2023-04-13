@@ -6,7 +6,7 @@ const Product = () =>{
 
 
         <div className="product-image">
-            <img src={productImg} alt="Product Image"/>
+            <img src={productImg} alt="Product"/>
             <a href="https://github.com/sajanpoudel/Kissan" className="product-link">View Product</a>
         </div>
         <div className="product-description">

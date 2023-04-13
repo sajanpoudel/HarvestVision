@@ -1,6 +1,5 @@
 import introImg from '../assets/intro-img.png';
-import { Link } from 'react-router-dom';
-import Rout from '../controllers/route';
+
 import {useNavigate} from "react-router-dom" 
 
 
@@ -20,7 +19,7 @@ const Intro =() =>{
             </div>
         </div>
         <div className="intro-image">
-            <img src={introImg} alt="Image description"/>
+            <img src={introImg} alt="Modern Agriculture"/>
         </div>
 
 
