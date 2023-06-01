@@ -1,89 +1,76 @@
 const Header = () => {
-    return <header>
-       
+  return (
+    <header>
+      <nav className="navbar">
+        {/* <!-- LOGO --> */}
 
+        <div className="logo">
+          <h1>
+            <i className="fas fa-chart-line"></i>HarvestVision
+          </h1>
+        </div>
 
-<nav
-    className="navbar">
+        {/* <!-- NAVIGATION MENU --> */}
 
-    {/* <!-- LOGO --> */}
+        <ul className="nav-links">
+          {/* <!-- USING CHECKBOX HACK --> */}
 
-    <div className="logo">
-        <h1>
-            <i className="fas fa-chart-line"></i>HarvestVision</h1>
-    </div>
+          <input type="checkbox" id="checkbox_toggle" />
 
-    {/* <!-- NAVIGATION MENU --> */}
+          <label htmlFor="checkbox_toggle" className="hamburger">
+            &#9776;
+          </label>
 
-    <ul
-        className="nav-links">
+          {/* <!-- NAVIGATION MENUS --> */}
 
-        {/* <!-- USING CHECKBOX HACK --> */}
-
-        <input type="checkbox" id="checkbox_toggle"/>
-
-        <label htmlFor="checkbox_toggle" className="hamburger">&#9776;</label>
-
-        {/* <!-- NAVIGATION MENUS --> */}
-
-        <div className="menu">
-
+          <div className="menu">
             <li>
-                <a href="/">Home</a>
+              <a href="/">Home</a>
             </li>
 
             <li>
-                <a href="/">About</a>
+              <a href="/">About</a>
             </li>
 
             <li className="services">
+              <a href="/">Services</a>
 
-                <a href="/">Services</a>
+              {/* <!-- DROPDOWN MENU --> */}
 
-                {/* <!-- DROPDOWN MENU --> */}
+              <ul className="dropdown">
+                <li>
+                  <a href="/">Dropdown 1</a>
+                </li>
 
-                <ul className="dropdown">
+                <li>
+                  <a href="/">Dropdown 2</a>
+                </li>
 
-                    <li>
-                        <a href="/">Dropdown 1
-                        </a>
-                    </li>
+                <li>
+                  <a href="/">Dropdown 2</a>
+                </li>
 
-                    <li>
-                        <a href="/">Dropdown 2</a>
-                    </li>
+                <li>
+                  <a href="/">Dropdown 3</a>
+                </li>
 
-                    <li>
-                        <a href="/">Dropdown 2</a>
-                    </li>
-
-                    <li>
-                        <a href="/">Dropdown 3</a>
-                    </li>
-
-                    <li>
-                        <a href="/">Dropdown 4</a>
-                    </li>
-
-                </ul>
-
+                <li>
+                  <a href="/">Dropdown 4</a>
+                </li>
+              </ul>
             </li>
 
             <li>
-                <a href="/">Pricing</a>
+              <a href="/">Pricing</a>
             </li>
 
             <li>
-                <a href="/">Contact</a>
+              <a href="/">Contact</a>
             </li>
-
-        </div>
-
-    </ul>
-
-</nav>
-
-
+          </div>
+        </ul>
+      </nav>
     </header>
-}
-export default Header
+  );
+};
+export default Header;
