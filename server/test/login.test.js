@@ -33,4 +33,15 @@ describe("userLogin", () => {
     assert.equal(res.statusCode, 400)
     assert.match(res.body.message, /not registered/)
   })
+
+  it("locks an email after five wrong passwords", async () => {
+    await register("lock@x.io", "harvest42")
+    for (let i = 0; i < 5; i++) {
+      await AuthController.userLogin({ body: { email: "lock@x.io", password: "wrong-pass1" } }, fakeResponse())
+    }
+    const res = fakeResponse()
+    await AuthController.userLogin({ body: { email: "lock@x.io", password: "harvest42" } }, res)
+    assert.equal(res.statusCode, 429)
+    assert.match(res.body.message, /Too many failed attempts/)
+  })
 })

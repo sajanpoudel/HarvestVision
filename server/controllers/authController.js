@@ -4,6 +4,9 @@ import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { getJwtSecret } from "../config/jwt.js";
 import { MIN_PASSWORD_LENGTH, isStrongPassword, isValidEmail } from "../utils/validators.js";
+import { createLoginLimiter } from "../middlewares/loginLimiter.js";
+
+const loginLimiter = createLoginLimiter();
 
 class AuthController {
   static userRegistration = async (req, res) => {
@@ -52,6 +55,12 @@ class AuthController {
     const { email, password } = req.body;
     try {
       if (email && password) {
+        const waitMs = loginLimiter.waitMs(email);
+        if (waitMs > 0) {
+          return res.status(429).json({
+            message: `Too many failed attempts. Try again in ${Math.ceil(waitMs / 60000)} minutes.`,
+          });
+        }
         const isEmailRegistered = await authModel.findOne({ email: email });
         if (isEmailRegistered) {
           if (
@@ -63,8 +72,10 @@ class AuthController {
               expiresIn: "2d",
             });
 
+            loginLimiter.recordSuccess(email);
             return res.status(200).json({ message: "Login Successfull", token });
           } else {
+            loginLimiter.recordFailure(email);
             return res.status(400).json({ message: "Invalid Credentials" });
           }
         } else {
