@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "node --experimental-test-module-mocks --test test/",
+    "test": "node --experimental-test-module-mocks --test test/*.test.js",
     "start": "node index.js"
   },
   "repository": {
