@@ -26,4 +26,11 @@ describe("userLogin", () => {
     assert.equal(res.statusCode, 400)
     assert.equal(res.body.message, "Both credentials are required!")
   })
+
+  it("asks unknown users to register", async () => {
+    const res = fakeResponse()
+    await AuthController.userLogin({ body: { email: "nobody@x.io", password: "pw" } }, res)
+    assert.equal(res.statusCode, 400)
+    assert.match(res.body.message, /not registered/)
+  })
 })
