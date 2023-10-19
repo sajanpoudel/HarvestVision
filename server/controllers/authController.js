@@ -3,12 +3,21 @@ import authModel from "../models/authModel.js";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { getJwtSecret } from "../config/jwt.js";
+import { MIN_PASSWORD_LENGTH, isStrongPassword, isValidEmail } from "../utils/validators.js";
 
 class AuthController {
   static userRegistration = async (req, res) => {
     const { name, email, password } = req.body;
     try {
       if (name && email && password) {
+        if (!isValidEmail(email)) {
+          return res.status(400).json({ message: "Enter a valid email address!" });
+        }
+        if (!isStrongPassword(password)) {
+          return res.status(400).json({
+            message: `Password needs at least ${MIN_PASSWORD_LENGTH} characters with a letter and a digit!`,
+          });
+        }
         const ifAlreadyPresent = await authModel.findOne({ email: email });
         if (!ifAlreadyPresent) {
           //Password Hashing

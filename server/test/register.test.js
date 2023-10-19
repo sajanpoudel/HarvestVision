@@ -23,23 +23,32 @@ describe("userRegistration", () => {
     assert.equal(res.body.message, "All fields are required!")
   })
 
-  it("rejects a request without all fields", async () => {
-    const res = fakeResponse()
-    await AuthController.userRegistration({ body: { name: "A", email: "a@b.c" } }, res)
-    assert.equal(res.statusCode, 400)
-    assert.equal(res.body.message, "All fields are required!")
-  })
-
   it("registers a new user", async () => {
     const res = fakeResponse()
-    await AuthController.userRegistration({ body: { name: "Ada", email: "ada@x.io", password: "pw" } }, res)
+    await AuthController.userRegistration({ body: { name: "Ada", email: "ada@x.io", password: "harvest42" } }, res)
     assert.equal(res.statusCode, 200)
     assert.equal(users.length, 1)
   })
 
   it("stores a hash instead of the password", async () => {
-    await AuthController.userRegistration({ body: { name: "Ada", email: "ada@x.io", password: "secret" } }, fakeResponse())
-    assert.notEqual(users[0].password, "secret")
-    assert.ok(await bcryptjs.compare("secret", users[0].password))
+    await AuthController.userRegistration({ body: { name: "Ada", email: "ada@x.io", password: "secret123" } }, fakeResponse())
+    assert.notEqual(users[0].password, "secret123")
+    assert.ok(await bcryptjs.compare("secret123", users[0].password))
+  })
+
+  it("rejects an email that is not an address", async () => {
+    const res = fakeResponse()
+    await AuthController.userRegistration({ body: { name: "Ada", email: "ada-at-x", password: "harvest42" } }, res)
+    assert.equal(res.statusCode, 400)
+    assert.equal(res.body.message, "Enter a valid email address!")
+    assert.equal(users.length, 0)
+  })
+
+  it("rejects a weak password", async () => {
+    const res = fakeResponse()
+    await AuthController.userRegistration({ body: { name: "Ada", email: "ada@x.io", password: "short" } }, res)
+    assert.equal(res.statusCode, 400)
+    assert.match(res.body.message, /at least 8 characters/)
+    assert.equal(users.length, 0)
   })
 })
