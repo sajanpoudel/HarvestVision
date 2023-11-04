@@ -39,4 +39,12 @@ describe("checkIsUserAuthenticated", () => {
     assert.equal(res.statusCode, 400)
     assert.equal(nextCalled, false)
   })
+
+  it("accepts a valid token and attaches the user without the password", async () => {
+    const token = jwt.sign({ userID: "u1" }, "test-secret")
+    const { req, nextCalled } = await run({ authorization: `Bearer ${token}` })
+    assert.equal(nextCalled, true)
+    assert.equal(req.user.email, "ada@x.io")
+    assert.equal("password" in req.user, false)
+  })
 })
