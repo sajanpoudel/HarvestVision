@@ -79,8 +79,29 @@ class AuthController {
   };
 
   static changePassword = async (req, res) => {
-    // Not built yet: answer the request instead of leaving it hanging
-    return res.status(501).json({ message: "Change password is not implemented yet" });
+    const { currentPassword, newPassword } = req.body;
+    try {
+      if (!currentPassword || !newPassword) {
+        return res.status(400).json({ message: "Both the current and the new password are required!" });
+      }
+      if (!isStrongPassword(newPassword)) {
+        return res.status(400).json({
+          message: `Password needs at least ${MIN_PASSWORD_LENGTH} characters with a letter and a digit!`,
+        });
+      }
+
+      const user = await authModel.findById(req.user._id);
+      if (!user || !(await bcryptjs.compare(currentPassword, user.password))) {
+        return res.status(400).json({ message: "Current password is wrong" });
+      }
+
+      const genSalt = await bcryptjs.genSalt(10);
+      user.password = await bcryptjs.hash(newPassword, genSalt);
+      await user.save();
+      return res.status(200).json({ message: "Password changed" });
+    } catch (error) {
+      return res.status(400).json({ message: error.message });
+    }
   };
 }
 

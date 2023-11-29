@@ -23,13 +23,17 @@ export function mockUserModel(users = []) {
     this._id = `id-${users.length + 1}`
   }
   FakeUser.prototype.save = async function () {
-    users.push(this)
+    if (!users.includes(this)) users.push(this)
     return this
   }
   FakeUser.findOne = async ({ email }) => users.find((u) => u.email === email) || null
+  // Like a mongoose query: awaiting it gives the whole document, select() hides the password.
   FakeUser.findById = (id) => {
     const found = users.find((u) => u._id === id) || null
-    return { select: async () => (found ? { _id: found._id, name: found.name, email: found.email } : null) }
+    return {
+      select: async () => (found ? { _id: found._id, name: found.name, email: found.email } : null),
+      then: (resolve, reject) => Promise.resolve(found).then(resolve, reject),
+    }
   }
   mock.module(new URL("../models/authModel.js", import.meta.url).href, { defaultExport: FakeUser })
   return { FakeUser, users }
