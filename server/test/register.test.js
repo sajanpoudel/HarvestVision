@@ -22,4 +22,11 @@ describe("userRegistration", () => {
     assert.equal(res.statusCode, 400)
     assert.equal(res.body.message, "All fields are required!")
   })
+
+  it("rejects a request without all fields", async () => {
+    const res = fakeResponse()
+    await AuthController.userRegistration({ body: { name: "A", email: "a@b.c" } }, res)
+    assert.equal(res.statusCode, 400)
+    assert.equal(res.body.message, "All fields are required!")
+  })
 })
