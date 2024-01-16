@@ -54,4 +54,10 @@ describe("checkIsUserAuthenticated", () => {
     assert.equal(res.statusCode, 400)
     assert.equal(nextCalled, false)
   })
+
+  it("rejects a request without an authorization header", async () => {
+    const { res, nextCalled } = await run({})
+    assert.equal(res.statusCode, 400)
+    assert.equal(nextCalled, false)
+  })
 })
