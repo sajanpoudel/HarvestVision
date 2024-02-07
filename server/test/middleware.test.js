@@ -60,4 +60,10 @@ describe("checkIsUserAuthenticated", () => {
     assert.equal(res.statusCode, 400)
     assert.equal(nextCalled, false)
   })
+
+  it("rejects a header that is not a bearer token", async () => {
+    const { res, nextCalled } = await run({ authorization: "Basic abc" })
+    assert.equal(res.body.message, "Unauthorized User")
+    assert.equal(nextCalled, false)
+  })
 })
