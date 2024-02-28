@@ -7,8 +7,7 @@ const PageRoutes = () => {
   return (
     <>
       <Routes>
-        {/* <Route exact path="/" component={App} /> */}
-        <Route path="/login_signup" component={LoginSignUp} element={<LoginSignUp />} />
+        <Route path="/login_signup" element={<LoginSignUp />} />
       </Routes>
     </>
   );
