@@ -15,3 +15,13 @@ jobs:
       - run: cd server && npm install --ignore-scripts
       - run: node --check server/index.js
       - run: cd server && npm test
+
+  client:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: cd client && npm install --ignore-scripts --legacy-peer-deps
+      - run: cd client && CI=true npm test -- --watchAll=false
