@@ -23,7 +23,7 @@ const run = async (headers) => {
 describe("checkIsUserAuthenticated", () => {
   it("rejects a request without an authorization header", async () => {
     const { res, nextCalled } = await run({})
-    assert.equal(res.statusCode, 400)
+    assert.equal(res.statusCode, 401)
     assert.equal(nextCalled, false)
   })
 
@@ -36,7 +36,7 @@ describe("checkIsUserAuthenticated", () => {
   it("rejects a token signed with another secret", async () => {
     const token = jwt.sign({ userID: "u1" }, "other-secret")
     const { res, nextCalled } = await run({ authorization: `Bearer ${token}` })
-    assert.equal(res.statusCode, 400)
+    assert.equal(res.statusCode, 401)
     assert.equal(nextCalled, false)
   })
 
@@ -51,13 +51,13 @@ describe("checkIsUserAuthenticated", () => {
   it("rejects an expired token", async () => {
     const token = jwt.sign({ userID: "u1" }, "test-secret", { expiresIn: -10 })
     const { res, nextCalled } = await run({ authorization: `Bearer ${token}` })
-    assert.equal(res.statusCode, 400)
+    assert.equal(res.statusCode, 401)
     assert.equal(nextCalled, false)
   })
 
   it("rejects a request without an authorization header", async () => {
     const { res, nextCalled } = await run({})
-    assert.equal(res.statusCode, 400)
+    assert.equal(res.statusCode, 401)
     assert.equal(nextCalled, false)
   })
 
@@ -70,7 +70,7 @@ describe("checkIsUserAuthenticated", () => {
   it("rejects a token signed with another secret", async () => {
     const token = jwt.sign({ userID: "u1" }, "other-secret")
     const { res, nextCalled } = await run({ authorization: `Bearer ${token}` })
-    assert.equal(res.statusCode, 400)
+    assert.equal(res.statusCode, 401)
     assert.equal(nextCalled, false)
   })
 
@@ -85,7 +85,7 @@ describe("checkIsUserAuthenticated", () => {
   it("rejects an expired token", async () => {
     const token = jwt.sign({ userID: "u1" }, "test-secret", { expiresIn: -10 })
     const { res, nextCalled } = await run({ authorization: `Bearer ${token}` })
-    assert.equal(res.statusCode, 400)
+    assert.equal(res.statusCode, 401)
     assert.equal(nextCalled, false)
   })
 })
