@@ -36,4 +36,10 @@ describe("userRegistration", () => {
     assert.equal(res.statusCode, 200)
     assert.equal(users.length, 1)
   })
+
+  it("stores a hash instead of the password", async () => {
+    await AuthController.userRegistration({ body: { name: "Ada", email: "ada@x.io", password: "secret" } }, fakeResponse())
+    assert.notEqual(users[0].password, "secret")
+    assert.ok(await bcryptjs.compare("secret", users[0].password))
+  })
 })
