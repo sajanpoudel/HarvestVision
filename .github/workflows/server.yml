@@ -14,3 +14,4 @@ jobs:
           node-version: 22
       - run: cd server && npm install --ignore-scripts
       - run: node --check server/index.js
+      - run: cd server && npm test
