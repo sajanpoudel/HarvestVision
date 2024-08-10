@@ -28,3 +28,13 @@ cd client
 npm install
 npm start
 ```
+
+### Server tests
+
+```
+cd server
+npm install
+npm test
+```
+
+The tests use the Node test runner (Node 22 or newer) and replace the user model with an in memory fake, so no MongoDB is needed.
