@@ -48,3 +48,11 @@ The tests use the Node test runner (Node 22 or newer) and replace the user model
 ```
 
 New passwords need at least 8 characters with a letter and a digit, the same rule as registration. A missing or invalid token gets a 401.
+
+### Current user
+
+`GET /api/v1/user/me` with the same bearer token returns `{ "user": { "id", "name", "email" } }`.
+
+### Failed logins
+
+After five wrong passwords for one email the server answers `429` for ten minutes. A successful login resets the count. The counts live in memory, so a restart clears them.
