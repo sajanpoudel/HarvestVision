@@ -19,7 +19,7 @@ cp .env.example .env     # set JWT_SECRET and, if needed, MONGO_URI
 JWT_SECRET=your-secret node index.js
 ```
 
-Endpoints under `/api/v1`: `POST /user/register`, `POST /user/login`, and a protected `POST /change-password` that is not implemented yet.
+Endpoints under `/api/v1`: `POST /user/register`, `POST /user/login`, and a protected `POST /change-password`.
 
 Client (React):
 
@@ -38,3 +38,13 @@ npm test
 ```
 
 The tests use the Node test runner (Node 22 or newer) and replace the user model with an in memory fake, so no MongoDB is needed.
+
+### Change password
+
+`POST /api/v1/change-password` needs the header `Authorization: Bearer <token>` from the login response and a JSON body:
+
+```json
+{ "currentPassword": "harvest42", "newPassword": "fresh2024x" }
+```
+
+New passwords need at least 8 characters with a letter and a digit, the same rule as registration. A missing or invalid token gets a 401.
