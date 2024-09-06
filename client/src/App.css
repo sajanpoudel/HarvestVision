@@ -1,0 +1,17 @@
+
+.form-error {
+  margin: 4px 0 10px;
+  color: #b00020;
+  font-size: 0.9rem;
+}
+
+.form-success {
+  margin: 4px 0 10px;
+  color: #2e7d32;
+  font-size: 0.9rem;
+}
+
+.login_card button[disabled] {
+  opacity: 0.6;
+  cursor: wait;
+}
